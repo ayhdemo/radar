@@ -1,0 +1,9 @@
+<!-- 传入参数：post -->
+
+<div class="com-weibo-preview">
+	<div class="weibo-preview-hd"><%= post.title %> <a href="#">网页链接</a> <%= post.article.excerpt %>
+	</div>
+	<div class="weibo-preview-bd">
+		<img src="<%= article_show_url(post.article) %>" alt="">
+	</div>
+</div>

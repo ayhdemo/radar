@@ -1,0 +1,128 @@
+module Api
+  module V2
+    class ATplBase < ActionController::Base
+      ## 简单版
+      ## 目前服务于 石墨烯 <--> ETH ; 石墨烯 <--> OMNI
+
+      ## 暂定命名为DPOS 与 POW
+      ## master 是 DPOS ， slave 是POW 。 一个Master 可以对应多个slave
+      attr_reader :chain_type
+      before_action :find_account, only: [:query]
+
+      before_action :check_params, only: [:query,:bind]
+
+      def initialize(_project,_dpos_type,_pow_type)
+        super()
+        @project = _project
+        @dpos_type = _dpos_type
+        @pow_type = _pow_type
+      end
+
+      def query
+        if @slave.nil?
+          render :json => {
+              "code": 9001,
+              "msg":  "invalid access"
+          }
+        else
+          render_record_json
+        end
+      end
+
+      def bind
+        account_id   = dpos_param('account_id')
+        account_name = dpos_param('account_name')
+
+        return render :json => {
+            "code":   9001,
+            "msg":    "invalid access"
+        } if account_name.nil? or account_id.nil?
+
+        slave = ChainAccount.joins(:master)
+                  .where(project: @project)
+                  .where("chain_accounts.account_id = ? and chain_accounts.account_name = ? ",dpos_account_id,dpos_account_name)
+                  .limit(1)
+                  .first
+
+        @map = EthMap
+                   .where('chain_type=? and (account_name=? or account_id=?)', chain_type, account_name, account_id)
+                   .limit(1)
+                   .first
+        return render :json => {
+            "code":   2002,
+            "msg":    "account_name or account_id already exists"
+        } unless @map.nil?
+
+        EthMap.transaction do
+          @map = EthMap.lock.where('account_name is null and account_id is null').limit(1).first
+          unless @map
+            render :json => {
+                "code":  2003,
+                "msg":   "Eth地址不足",
+                "data":  nil
+            }
+            return $app_logger.error(self, "ETH地址不足, request info: [#{account_id}:#{account_name}]")
+          end
+
+          @map.update!(:chain_type => chain_type, :account_id => account_id, :account_name => account_name)
+        end
+
+        render_record_json
+      end
+
+
+      private
+      def dpos_param(param_name)
+        params["#{@dpos_type}_#{param_name}"]
+      end
+
+      def pow_param(param_name)
+        params["#{@pow_type}_#{param_name}"]
+      end
+
+      def find_slave
+        pow_address       = pow_param('address')
+        dpos_account_id   = dpos_param('account_id')
+        dpos_account_name = dpos_param('account_name')
+
+        return @slave = nil if pow_address.nil? and dpos_account_id.nil? and dpos_account_name.nil?
+
+        if (dpos_account_id && dpos_account_name)
+          # ChainAccount.where(project: @project).where()
+          account = ChainAccount.joins(:master).where(project: @project).where("chain_accounts.account_id = ? and chain_accounts.account_name = ? ",dpos_account_id,dpos_account_name).limit(1).first
+
+        elsif dpos_account_id 
+          account = ChainAccount.joins(:master).where(project: @project).where("chain_accounts.account_id = ? ",dpos_account_id).limit(1).first
+        elsif dpos_account_name
+          account = ChainAccount.joins(:master).where(project: @project).where("chain_accounts.account_name = ? ",dpos_account_name).limit(1).first
+        elsif pow_address #nil nil
+          account = ChainAccount.joins(:master).where("masters_chain_accounts.account_id = ?",pow_address).limit(1).first
+        end
+        
+        @slave = account
+        @master = account.master
+          
+        # ChainAccount.joins(:slaves)  ==> 竟然会有重复！ 所以不能这么查
+      end    
+
+      def collect_record_columns
+        {
+            "#{@pow_type}_address":           @slave.account_id,
+            "#{@dpos_type}_account_id":       @master.account_id,
+            "#{@dpos_type}_account_account":  @master.account_name,
+        }
+      end
+
+      def render_record_json
+
+        render :json => {
+          "code": 0,
+          "msg":  "ok",
+          "data": collect_record_columns
+        }
+
+      end
+
+    end
+  end
+end

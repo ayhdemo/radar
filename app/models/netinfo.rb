@@ -1,0 +1,2 @@
+class Netinfo < ApplicationRecord
+end

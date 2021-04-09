@@ -1,0 +1,138 @@
+<%#= content_tag 'p', nil, :id => 'gw-accounts', :'data-gw-accounts' => @gw_accounts %>
+<!-- BEGIN PAGE HEAD -->
+<div class="page-head">
+  <div class="container">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>威力反演
+        <small></small>
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+  </div>
+</div>
+<!-- END PAGE HEAD -->
+<!-- BEGIN PAGE CONTENT -->
+<div class="page-content">
+  <p style='display:none' data-json="<%= @json_content %>" id="fanyan-default-data"></p>
+  <div id="his-container" class="container">
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-gift font-green-sharp"></i>
+              <span class="caption-subject font-green-sharp bold">威力反演</span>
+            </div>
+            <div class="actions">
+              <button id="btn-expand" class="btn btn-default btn-sm">
+                <i class="fa fa-expand" title="全屏"></i>
+              </button>
+              <button id="btn-compress" class="btn btn-default btn-sm" style="display: none;">
+                <i class="fa fa-compress" title="取消全屏"></i>
+              </button>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <%= form_tag({:action => 'upload_csv'}, :multipart => true, :id => 'frm_fanyan', class: 'form-inline row') do %>
+              <div class="form-group">
+                <label for="upload_datafile">选择反演文件</label>
+                <%= file_field 'upload', 'datafile' %></p>                
+                <p class="help-block"></p>
+              </div>
+              <%= submit_tag "开始反演！", id:'btn_submit', class: 'btn btn-default', data: { disable_with: false } %>
+            <% end %>
+            <hr/>
+            <div class="row">
+              <div class="col-xs-12 col-md-12">
+                <div id="box" style="width: 100%; height:400px; display: inline-block"></div>
+              </div>
+              <div class="col-xs-6 col-md-12">
+                <!-- <p class='title'><b>威力反演结果</b></p> -->
+                <!-- <table id='tbl-fanyan-result'></table> -->
+                <p style='display:none'>【拟合采用参数：】[-417696.48933690286, 44918.68548440652, -1206.4991485855144]<br>【波束宽度】0.8025765073120752度<br>【自由空间损耗】[314.13855102653457, 314.9562403542742, 313.279854127817, 315.19543295246564, 313.6684661653064, 308.63630079457585, 314.1524998318264, 315.6944337952789, 311.06281903374145]dB<br>【大气损耗】[19.35459889506707, 19.60853330673615, 19.422739531300174, 19.811586479915597, 19.46957862291077, 18.869984586557255, 19.63402637348392, 19.90541041152908, 19.132353412232145]dB<br>【多普勒频移】[8.120261030386148e-05, 8.120261030386148e-05, 8.120261030386148e-05, 8.120261030386148e-05, 8.120261030386148e-05, 8.120261030386148e-05, 8.120261030386148e-05, 8.120261030386148e-05, 8.120261030386148e-05]Hz<br>【卫星高度】[500000.0, 500000.0, 500000.0, 500000.0, 500000.0, 500000.0, 500000.0, 500000.0, 500000.0]度<br>【卫星纬度】[27.487, 27.471, 27.416, 27.422, 27.428, 27.376, 27.36, 27.31, 27.379]度<br>【卫星经度】[128.532, 128.5, 128.523, 128.477, 128.517, 128.609, 128.497, 128.467, 128.564]度<br>【目标纬度】[39.9, 39.9, 39.9, 39.9, 39.9, 39.9, 39.9, 39.9, 39.9]度<br>【目标经度】[116.3, 116.3, 116.3, 116.3, 116.3, 116.3, 116.3, 116.3, 116.3]度<br></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End: life time stats -->
+      </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+  </div>
+</div>
+<!-- END PAGE CONTENT -->
+
+
+
+<div class="page-content">
+  <p style='display:none' data-json="<%= @json_content %>" id="fanyan-default-data"></p>
+  <div id="his-container" class="container">
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-gift font-green-sharp"></i>
+              <span class="caption-subject font-green-sharp bold">威力反演结果</span>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div class="row">
+              <div class="col-xs-6 col-md-12">
+
+                <table id='tbl-fanyan-result'></table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End: life time stats -->
+      </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+  </div>
+</div>
+<!-- END PAGE CONTENT -->
+
+
+<!--S 模态框-添加标注-->
+<div class="modal" id="mdl-his_comment" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加/更新标注
+          <small class="text-info">
+            <span class="fa fa-info-circle"></span>
+            为人工处理的交易添加标注，补充说明交易的状态。
+          </small>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for([:admin, History.new], :html => {:id => 'frm-history', :class => 'form-horizontal clearfix user-form-validate', :role => 'form'}) do |f| %>
+          <div class="form-group">
+            <%= f.label(:id, '记录编号', :class => "control-label") %>
+            <%= f.text_field(:id, :placeholder => 'id', :class => 'form-control', readonly: true, :required => true) %>
+          </div>
+          <div class="form-group">
+            <%= f.label(:comment, raw('添加/更新交易标注 <button id="btn-set_default_comment" type="button" class="btn-link">插入模板</button>'), :class => "control-label") %>
+            <%= f.text_area(:comment, :placeholder => '标注内容', :class => 'form-control', readonly: false, :required => true, rows: 6) %>
+
+            <p class="help-block"><i class="fa fa-warning"></i> 标注内容需要提供必要的处理结果，如已退回、已重发等，并提供转出到的账户、金额、交易ID、转出时间等</p>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+        <button type="button" id="btn-save_his_comment" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 保存中" class="btn green">保存</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--E 模态框-添加资产-->
+
+<%= javascript_include_tag 'common/echarts.min.js' %>

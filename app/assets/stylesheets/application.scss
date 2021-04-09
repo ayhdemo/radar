@@ -1,0 +1,81 @@
+//=require animate
+
+.text-my-green {
+  font-weight: 400;
+  color: green;
+}
+.text-my-red {
+  font-weight: 400;
+  color: #b30000;
+}
+.text-my-blue {
+  font-weight: 400;
+  color: #003bbb;
+}
+.text-my-light-blue {
+  font-weight: 400;
+  color: #337ab7;
+}
+.dropdown-menu {
+  margin: 0 !important;
+  box-shadow: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    display: block;
+  }
+}
+.dropdown-toggle {
+  &:hover,
+  &:focus,
+  &:active {
+    &+.dropdown-menu {
+      margin: 0;
+      display: block;
+    }
+  }
+}
+
+.table {
+  thead, tbody, tfoot {
+    & > tr {
+      th, td {
+        &.bs-checkbox {
+          vertical-align : middle;
+        }
+      }
+    }
+  }
+}
+
+.bootstrap-table {
+  .fixed-table-container,
+  .fixed-table-body {
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+  }
+
+  table {
+    border: 0;
+
+    thead {
+      background-color: #ececec;
+    }
+    th {
+      outline: unset;
+    }
+  }
+}
+#btn-start_scheduler {
+  .fa {
+    color: #f96753;
+  }
+}
+
+#btn-stop_scheduler {
+  .fa {
+    color: lawngreen;
+  }
+}

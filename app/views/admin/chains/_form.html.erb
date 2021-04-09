@@ -1,0 +1,53 @@
+<div class="portlet light">
+  <div class="portlet-title">
+    <div class="caption">
+      <i class="fa fa-cogs font-green-sharp"></i>
+      <span class="caption-subject font-green-sharp bold uppercase">STEP-1 基本属性</span>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <div class="row">
+        <!-- BEGIN FORM-->
+        <%= form_for([:admin, @chain], :html => {:class => 'form-horizontal clearfix user-form-validate', :role => 'form'}) do |f| %>
+          <div class="form-body">
+            <div class="col-sm-2">
+              <div class="form-group">
+                <%= f.label(:chain_type, '模板名称', :class => "control-label") %>
+                <%= f.text_field(:chain_type, :placeholder => '模板名称', :class => 'form-control', :readonly => true) %>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <%= f.label(:chain_uuid, '链ID', :class => "control-label") %>
+                <%= f.text_field(:chain_uuid, :placeholder => 'Chain ID', :class => 'form-control', :required => true, :pattern => '.*\S+.*') %>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <div class="form-group">
+                <%= f.label(:interval, '调度间隔', :class => "control-label") %>
+                <%= f.text_field(:interval, :placeholder => '调度间隔', :class => 'form-control', :required => true) %>
+              </div>
+            </div>
+            <div class="col-sm-1">
+              <div class="form-group">
+                <%= f.label(:enabled, '启用', :class => "control-label") %>
+                <%= f.check_box(:enabled, {:placeholder => '是否启用', :class => 'form-control'}, 'true', 'false') %>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <div class="form-group">
+                <div><label for="#" class="control-label">操作</label></div>
+                <div class="btn-group">
+                  <%= link_to '返回', admin_chains_path, :class => 'btn default' %>
+                  <button type="submit" class="btn green">更新</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <!-- END FORM-->
+      </div>
+    </div>
+
+  </div>
+</div>

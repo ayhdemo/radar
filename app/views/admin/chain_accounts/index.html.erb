@@ -1,0 +1,144 @@
+<!-- BEGIN PAGE HEAD -->
+<div class="page-head">
+  <div class="container">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>账户管理
+        <small><%= @chain.chain_type %></small>
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+  </div>
+</div>
+<!-- END PAGE HEAD -->
+<!-- BEGIN PAGE CONTENT -->
+<div class="page-content">
+  <div class="container">
+    <!-- BEGIN PAGE BREADCRUMB -->
+    <ul class="page-breadcrumb breadcrumb">
+      <li><%= link_to '首页', root_path %></li>
+      <li><%= link_to '模板列表页', admin_chains_path %></li>
+      <li class="active">账户管理页</li>
+    </ul>
+    <!-- END PAGE BREADCRUMB -->
+
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-gift font-green-sharp"></i>
+              <span class="caption-subject font-green-sharp bold uppercase">账户列表</span>
+              <span class="caption-helper">管理账户</span>
+            </div>
+            <div class="actions">
+              <a href="<%= admin_chain_chain_assets_path(@chain) %>" class="btn btn-default btn-circle">
+                <i class="fa fa-cny"></i>
+                <span class="hidden-480"> 管理资产</span>
+              </a>
+              <a id="btn-add_account" class="btn btn-default btn-circle">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480"> 添加账户</span>
+              </a>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div class="table-container">
+              <div id="toolbar">
+                <% #使用form helper生成表单；让其引入cors的元素；%>
+                <div class="btn-group">
+                  <%= button_tag('启用转入', id: 'btn-enable_accounts_in', class: 'btn btn-sm green', type: 'button', disabled: true) %>
+                  <%= button_tag('禁用转入', id: 'btn-disable_accounts_in', class: 'btn btn-sm red', type: 'button', disabled: true) %>
+                </div>
+                <div class="btn-group">
+                  <%= button_tag('启用转出', id: 'btn-enable_accounts_out', class: 'btn btn-sm green', type: 'button', disabled: true) %>
+                  <%= button_tag('禁用转出', id: 'btn-disable_accounts_out', class: 'btn btn-sm red', type: 'button', disabled: true) %>
+                </div>
+              </div>
+              <!---->
+              <table
+                id="tbl-chain_accounts"
+                data-classes="table table-striped table-bordered table-hover"
+                data-url="<%= more_chain_account_admin_chain_chain_accounts_path %>"
+                data-toolbar="#toolbar"
+                data-search="true"
+                data-method="get"
+                data-data-field="data"
+                data-pagination="true"
+                data-side-pagination="server"
+                data-page-size="25"
+                data-page-list="[25, 50, 100]"
+              >
+
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- End: life time stats -->
+      </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+  </div>
+</div>
+<!-- END PAGE CONTENT -->
+
+
+<!--S 模态框-添加账户-->
+<div class="modal" id="mdl-add_account" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加账户</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for([:admin, :chain, ChainAccount.new], :html => {:id => 'frm-account', :class => 'form-horizontal clearfix user-form-validate', :role => 'form'}) do |f| %>
+          <div class="form-group alert-warning">
+            <span class="help-block text-danger">
+              <span class="fa fa-warning"></span>
+              添加的账户无法用作 BTC, ETH, OMNI等链的 充值地址，充值地址需通过相应的脚本生成。
+            </span>
+          </div>
+          <div class="form-group">
+            <%= f.label(:chain_type, '所属模板', :class => "control-label col-sm-4") %>
+            <div class="col-sm-8">
+              <%= f.text_field(:chain_type, :value => @chain.chain_type, :placeholder => '所属模板', :class => 'form-control', readonly: true, :required => true) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label(:account_id, '账户ID', :class => "control-label col-sm-4") %>
+            <i class="fa fa-spinner fa-spin hidden"></i>
+            <div class="col-sm-8">
+              <%= f.text_field(:account_id, :placeholder => '账户ID', :class => 'form-control', :required => true) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= label(:account_name, '账户名', :class => "control-label col-sm-4") %>
+            <div class="col-sm-8">
+              <%= f.text_field(:account_name, :placeholder => '账户名', :class => 'form-control', readonly: false, :required => true) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-8 col-sm-offset-4">
+              <%= f.check_box(:in_enabled, {:class => 'btn'}, 'true', 'false') %>
+              <%= f.label(:in_enabled, '允许转入', :class => "control-label") %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-8 col-sm-offset-4">
+              <%= f.check_box(:out_enabled, {:class => 'btn'}, 'true', 'false') %>
+              <%= f.label(:out_enabled, '允许转出', :class => "control-label") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+        <button type="button" id="btn-save_new_account" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 保存中" class="btn green">保存</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--E 模态框-添加资产-->

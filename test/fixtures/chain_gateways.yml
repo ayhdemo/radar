@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_chain_type: MyString
+  to_chain_type: MyString
+  from_asset_id: MyString
+  to_asset_id: MyString
+  enabled: false
+
+two:
+  from_chain_type: MyString
+  to_chain_type: MyString
+  from_asset_id: MyString
+  to_asset_id: MyString
+  enabled: false

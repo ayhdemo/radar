@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_chain: MyString
+  to_chain: MyString
+  from_account_id: MyString
+  from_account_name: MyString
+  to_account_id: MyString
+  to_account_name: MyString
+  in_asset_id: MyString
+  in_asset_name: MyString
+  in_amount: 9.99
+  out_amount: 9.99
+  description: MyString
+  decrypted_memo: MyString
+  in_block_num: 1
+  in_block_time: MyString
+  in_trx_id: MyString
+  out_block: 1
+  out_memo: MyString
+  out_time: MyString
+  out_trx_id: MyString
+
+two:
+  from_chain: MyString
+  to_chain: MyString
+  from_account_id: MyString
+  from_account_name: MyString
+  to_account_id: MyString
+  to_account_name: MyString
+  in_asset_id: MyString
+  in_asset_name: MyString
+  in_amount: 9.99
+  out_amount: 9.99
+  description: MyString
+  decrypted_memo: MyString
+  in_block_num: 1
+  in_block_time: MyString
+  in_trx_id: MyString
+  out_block: 1
+  out_memo: MyString
+  out_time: MyString
+  out_trx_id: MyString

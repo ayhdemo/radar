@@ -1,0 +1,15 @@
+development:
+  url: bolt://127.0.0.1:7687
+  username: neo4j
+  password: "123"
+  encryption: false
+
+test:
+  type: http
+  url: http://neo4j:123@localhost:7474
+
+production:
+  type: http
+  url: http://neo4j:password@localhost:7000
+  username: neo4j
+  password: 123

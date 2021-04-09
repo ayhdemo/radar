@@ -1,0 +1,103 @@
+<!-- BEGIN HEADER -->
+<div class="page-header">
+  <!-- BEGIN HEADER TOP -->
+  <div class="page-header-top">
+    <div class="container">
+      <!-- BEGIN LOGO -->
+      <div class="page-logo">
+        <a href="/admin">
+          <img src="/img/admin/logo.png" alt="logo" class="logo-default">
+        </a>
+
+      </div>
+      <!-- END LOGO -->
+      <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+      <a href="#" class="menu-toggler"></a>
+      <!-- END RESPONSIVE MENU TOGGLER -->
+      <!-- BEGIN TOP NAVIGATION MENU -->
+      <div class="top-menu">
+        <ul class="nav navbar-nav pull-right">
+          <% if current_user %>
+            <li class="dropdown dropdown-user dropdown-dark">
+              <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                <img alt="" class="img-circle" src="<%= current_user.user_face_pic.url(:small) %>">
+                <span class="username username-hide-mobile"><%= current_user.email %></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-default">
+                <% if can?(:edit, User) %>
+                  <li>
+                    <a href="<%= edit_admin_user_path current_user %>">
+                      <i class="icon-user"></i>
+                      个人信息
+                    </a>
+                  </li>
+                <% end %>
+                <li>
+                  <a href="<%= destroy_user_session_path %>" data-method="delete">
+                    <i class="icon-key"></i>
+                    退出登录
+                  </a>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+          <!-- END USER LOGIN DROPDOWN -->
+        </ul>
+      </div>
+      <!-- END TOP NAVIGATION MENU -->
+    </div>
+  </div>
+  <!-- END HEADER TOP -->
+  <!-- BEGIN HEADER MENU -->
+  <div class="page-header-menu">
+    <div class="container">
+      <!-- BEGIN HEADER SEARCH BOX -->
+      <form class="search-form" action="extra_search.html" method="GET">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search" name="query">
+          <span class="input-group-btn">
+                        <a href="javascript:;" class="btn submit">
+                            <i class="icon-magnifier"></i>
+                        </a>
+                    </span>
+        </div>
+      </form>
+      <!-- END HEADER SEARCH BOX -->
+      <!-- BEGIN MEGA MENU -->
+      <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+      <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+      <div class="hor-menu ">
+        <ul class="nav navbar-nav">
+<!--           <li>
+            <a href="#">GateWay</a>
+          </li> -->
+          <% if can?(:index, History) %>
+            <li class="<%= controller_name == 'sigs' ? 'active' : '' %>">
+              <%= link_to '辐射源推理【图谱】', admin_sigs_path %>
+            </li>
+          <% end %>
+          <% if can?(:index, History) %>
+            <li class="<%= controller_name == 'fanyans' ? 'active' : '' %>">
+              <%= link_to '威力反演', admin_fanyans_path %>
+            </li>
+          <% end %>
+          <% if can?(:index, History) %>
+            <li class="<%= controller_name == 'rader_settings' ? 'active' : '' %>">
+              <%= link_to '相关参数设定', admin_rader_settings_path %>
+            </li>
+          <% end %>
+         <% if can?(:index, History) %>
+            <li class="<%= controller_name == 'syslog' ? 'active' : '' %>">
+              <%= link_to '系统实时日志', admin_syslogs_show_path %>
+            </li>
+          <% end %>
+
+        
+        </ul>
+      </div>
+      <!-- END MEGA MENU -->
+    </div>
+  </div>
+  <!-- END HEADER MENU -->
+</div>
+<!-- END HEADER -->

@@ -1,0 +1,82 @@
+<!-- BEGIN PAGE HEAD -->
+<div class="page-head">
+  <div class="container">
+    <!-- BEGIN PAGE TITLE -->
+    <div class="page-title">
+      <h1>用户列表
+        <small>statistics & reports</small>
+      </h1>
+    </div>
+    <!-- END PAGE TITLE -->
+  </div>
+</div>
+<!-- END PAGE HEAD -->
+<!-- BEGIN PAGE CONTENT -->
+<div class="page-content">
+  <div class="container">
+    <!-- BEGIN PAGE BREADCRUMB -->
+    <ul class="page-breadcrumb breadcrumb">
+      <li class="active">用户列表页</li>
+    </ul>
+    <!-- END PAGE BREADCRUMB -->
+
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-gift font-green-sharp"></i>
+              <span class="caption-subject font-green-sharp bold uppercase">用户列表</span>
+              <span class="caption-helper">管理用户</span>
+            </div>
+            <div class="actions">
+              <a href="<%= new_admin_user_path %>" class="btn btn-default btn-circle">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-480"> 新建用户</span>
+              </a>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div class="table-container">
+              <div id="toolbar">
+                <% #使用form helper生成表单；让其引入cors的元素；%>
+                <%=form_tag(admin_users_path, id: 'frm-tbl_actions' , method: 'delete', class: 'form-inline') do %>
+                    <%= button_tag('删除', id: 'btn-delete_users', class: 'btn btn-danger', type: 'button', disabled: true) %>
+                    <div class="form-group">
+                      <%= label_tag('类型：') %>
+                      <%= radio_button_tag(:genre, "0", selected: true) %>
+                      <%= label_tag(:genre_0, "全部") %>
+                      <%= radio_button_tag(:genre, "3") %>
+                      <%= label_tag(:genre_3, "管理员") %>
+                      <%= text_field(:ids, '', name:'ids', id: 'ipt-ids', hidden: true) %>
+                    </div>
+                <% end %>
+              </div>
+              <!--data-totalField="recordsTotal"-->
+              <table
+                id="tbl-users"
+                data-classes="table table-striped table-bordered table-hover"
+                data-url="<%= more_user_admin_users_path %>"
+                data-toolbar="#toolbar"
+                data-search="true"
+                data-method="post"
+                data-dataField="data"
+                data-pagination="true"
+                data-sidePagination="server"
+                data-page-size="25"
+                data-page-list="[25, 50, 100]"
+              >
+
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- End: life time stats -->
+      </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+  </div>
+</div>
+<!-- END PAGE CONTENT -->

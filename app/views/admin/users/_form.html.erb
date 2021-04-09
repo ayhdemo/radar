@@ -1,0 +1,74 @@
+<!-- BEGIN VALIDATION STATES-->
+<div class="portlet light">
+  <div class="portlet-title">
+    <div class="caption">
+      <i class="fa fa-cogs font-green-sharp"></i>
+      <span class="caption-subject font-green-sharp bold uppercase"><%= action_name == 'new' ? "新建用户" : "编辑用户" %></span>
+    </div>
+  </div>
+  <div class="portlet-body form">
+    <!-- BEGIN FORM-->
+    <%= form_for([:admin, @user], :html => {:class => 'form-horizontal clearfix user-form-validate', :role => 'form'}) do |f| %>
+    <div class="form-body">
+      
+    <div class="form-group">
+      <%= f.label(:username, '用户名', :class => "col-md-2 control-label") %>
+      <div class="col-md-4">
+        <%= f.text_field(:username, :placeholder => '用户名', :class => 'form-control') %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label(:email, '邮箱', :class => "col-md-2 control-label") %>
+      <div class="col-md-4">
+        <%= f.text_field(:email, :placeholder => '邮箱', :class => 'form-control') %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label(:genre, '用户类型', :class => "col-md-2 control-label") %>
+      <div class="col-md-4">
+        <%= f.select(:genre, [['普通用户', 3], ['管理员', 2], ['超级管理员', 1]], {}, :class => 'form-control') %>
+      </div>
+    </div>
+      <% if action_name == 'new' %>
+      <div class="form-group">
+          <%= f.label(:password, :class => "control-label col-md-2") do %>
+          密码
+          <% end %>
+          <div class="col-md-4">
+              <%= f.text_field(:password, :type => 'password', :class => 'form-control') %>
+          </div>
+      </div>
+      <div class="form-group">
+          <%= f.label(:password_confirmation, :class => "control-label col-md-2") do %>
+          确认密码
+          <% end %>
+          <div class="col-md-4">
+              <%= f.text_field(:password_confirmation, :type => 'password', :class => 'form-control') %>
+          </div>
+      </div>
+      <% end %>
+      <div class="form-group fileupload ">
+          <%= f.label(:user_face_pic, "上传头像(180*180)", :class => "col-md-2 control-label") %>
+
+          <div class="col-md-4">
+              <%= f.file_field(:user_face_pic, :class => "dropify", :"data-default-file" => @user.user_face_pic.url(:medium), :"data-show-remove" => "false") %>
+          </div>
+      </div>
+    </div>
+    <div class="form-actions">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-9">
+                <%= link_to '返回', admin_users_path, :class => 'btn btn-default' %>
+                <% if action_name == 'new' %>
+                <button type="submit" class="btn green">保存</button>
+                <% else %>
+                <button type="submit" class="btn green">更新</button>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <% end %>
+    <!-- END FORM-->
+  </div>
+</div>
+<!-- END VALIDATION STATES-->

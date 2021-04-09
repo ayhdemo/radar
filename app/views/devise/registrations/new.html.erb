@@ -1,0 +1,59 @@
+<!-- BEGIN LOGO -->
+<div class="logo">
+    <a href="/admin">
+        <img src="/img/admin/logo.png" alt="logo" class="logo-default">
+    </a>
+</div>
+<!-- END LOGO -->
+
+<!-- BEGIN LOGIN -->
+<div class="content">
+    <!-- BEGIN LOGIN FORM -->
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => "login-form"}) do |f| %>
+    	<h3 class="form-title">注册</h3>
+        <div class="alert alert-danger display-hide">
+            <button class="close" data-close="alert"></button>
+            <span>请填入账户信息...</span>
+        </div>
+        <div class="form-group">
+			<%= f.label(:email, '邮箱', :class => "control-label visible-ie8 visible-ie9") %>
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+				<%= f.text_field(:email, :placeholder => '邮箱', :class => "form-control form-control-solid placeholder-no-fix", :autocomplete => "off") %>
+			</div>
+		</div>
+		<div class="form-group">
+			<%= f.label(:password, '密码', :class => "control-label visible-ie8 visible-ie9") %>
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+				<%= f.password_field(:password, :placeholder => '密码', :class => "form-control placeholder-no-fix", :autocomplete => "off") %>
+			</div>
+		</div>
+		<div class="form-group">
+			<%= f.label(:password_confirmation, '重复密码', :class => "control-label visible-ie8 visible-ie9") %>
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+				<%= f.password_field(:password_confirmation, :placeholder => '重复密码', :class => "form-control placeholder-no-fix", :autocomplete => "off") %>
+			</div>
+		</div>
+		<div class="form-group" style="display: none;">
+			<label>
+				<input type="checkbox" name="tnc"/> I agree to the 
+				<a href="#">Terms of Service </a>and 
+				<a href="#">Privacy Policy </a>
+			</label>
+			<div id="register_tnc_error"></div>
+		</div>
+		<div class="form-actions">
+			<a type="button" class="btn blue" href="/users/sign_in">
+				<i class="m-icon-swapleft"></i> 返回登录 
+			</a>
+			<button type="submit" id="register-submit-btn" class="btn blue pull-right">
+				注册 <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+    <% end %>
+    <!-- END LOGIN FORM -->
+</div>
+<!-- END LOGIN -->
+

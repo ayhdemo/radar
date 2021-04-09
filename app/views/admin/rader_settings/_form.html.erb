@@ -1,0 +1,77 @@
+<div class="portlet light">
+  <div class="portlet-title">
+    <div class="caption">
+      <i class="fa fa-cogs font-green-sharp"></i>
+      <span class="caption-subject font-green-sharp bold uppercase">推理加权系数</span>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <div class="row">
+        <!-- BEGIN FORM-->
+        <% @rader_settings.each do |setting| %>
+          <% if setting.key != 'pinggu_pramas' then %>
+            <%= form_for([:admin, setting], :namespace=> setting.key, :html => {:class => 'rader_ss_setting', :role => 'form'}) do |f| %>
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <%= f.label(:key, "#{@settingmap[setting.key]}", :class => "control-label") %>
+                  <%= f.text_field(:value, :placeholder => '', :class => 'form-control rader-value', :'data-key' => setting.key, :'data-default' => setting.value) %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+        <!-- END FORM-->
+      </div>
+    </div>
+    <div class='row'>
+      <div class="col-sm-2">
+        <div class="form-group">
+          <button id='btn-submit-ss-settings' class='btn btn-default'>提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="portlet light">
+  <div class="portlet-title">
+    <div class="caption">
+      <i class="fa fa-cogs font-green-sharp"></i>
+      <span class="caption-subject font-green-sharp bold uppercase">雷达威胁评估矩阵</span>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <div class="row">
+        <!-- BEGIN FORM-->
+        <% @rader_settings.each do |setting| %>
+          <% if setting.key == 'pinggu_pramas' then %>
+            <%= form_for([:admin, setting], :namespace=> setting.key, :html => {:class => 'rader_fanyan_setting', :role => 'form'}) do |f| %>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <%= f.label(:key, setting.key, :class => "control-label") do %> 雷达威胁评估矩阵  <% end %>
+                  <%= f.text_area(:value, :placeholder => '', :class => 'form-control rader-value', :'data-key' => setting.key, :'data-default' => setting.value, :rows=> 10 ) %>
+                </div>
+
+                <div class='row'>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <button id='btn-submit-fanyan-settings' class='btn btn-default' type='button'>提交</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <div class="col-sm-6">
+              <table id='tbl-fanyan-matrix' class='table table-bordered table-hover table-striped text-center'>
+              <tbody></tbody>
+              </table>
+            </div>
+          <% break; end %>
+        <% end %>
+        <!-- END FORM-->
+    </div>
+  </div>
+
+</div>
+
+

@@ -1,0 +1,76 @@
+/*
+ *= require bootstrap/css/bootstrap.min
+ *= require bootstrap-table.min
+ *= require simple-line-icons/simple-line-icons.min
+ *= require components/admin/table-managed/index
+ *= require components/admin/table-ajax/index
+ *
+ *
+ *= require components/admin/common/index
+ *= require components/admin/common/layout
+ *= require components/admin/common/rounded
+ *= require components/admin/common/plugins
+ *= require components/admin/themes/light
+ *= require select2/css/select2
+ *
+ *= require_self
+ */
+
+.table-container {
+    .dataTables_filter {
+        .radio {
+            display: inline-block;
+            float: none;
+            padding-left: 8px;
+            margin: 0px 10px 5px 0;
+        }
+        input[type="radio"] {
+            position: relative;
+            margin-left: 0;
+            left: -6px;
+            width: auto;
+        }
+    }
+}
+
+#select_account {
+  width: 18em;
+  outline: none;
+}
+
+.monitor-account-list > div {
+  padding: 0;
+
+  .monitor-account {
+    border: 1px solid #437868;
+    padding: 4px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline;
+
+    .account-id {
+      color: #333;
+    }
+
+    .account-name {
+      font-weight: bold;
+      color: black;
+    }
+
+    &.selected {
+      .account-appendix {
+        display: unset;
+        color: green;
+      }
+    }
+    .account-appendix {
+      display: none;
+    }
+  }
+}
+
+
+
+.no-padding {
+  padding: 0;
+}

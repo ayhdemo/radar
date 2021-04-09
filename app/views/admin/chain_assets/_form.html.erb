@@ -1,0 +1,200 @@
+<div class="portlet light">
+  <div class="portlet-title">
+    <div class="caption">
+      <i class="fa fa-cogs font-green-sharp"></i>
+      <span class="caption-subject font-green-sharp bold uppercase">监听资产</span>
+    </div>
+    <div class="actions">
+      <a href="<%= admin_chain_chain_accounts_path(@chain) %>" class="btn btn-default btn-circle">
+        <i class="fa fa-users"></i>
+        <span class="hidden-480"> 管理账户</span>
+      </a>
+      <button id="btn-add_asset" class="btn btn-default btn-circle">
+        <i class="fa fa-plus"></i>
+        <span class="hidden-480"> 添加资产</span>
+      </button>
+    </div>
+  </div>
+  <div class="portlet-body">
+    <div class="table-container">
+      <div id="toolbar">
+        <% #使用form helper生成表单；让其引入cors的元素；%>
+        <%#=form_tag(admin_users_path, id: 'frm-tbl_assets' , class: 'form-inline') do %>
+          <%#= button_tag('删除', id: 'btn-delete_users', class: 'btn btn-danger', type: 'button', disabled: true) %>
+<!--          <div class="form-group">-->
+            <%#= label_tag('类型：') %>
+            <%#= radio_button_tag(:genre, "0", selected: true) %>
+            <%#= label_tag(:genre_0, "全部") %>
+            <%#= radio_button_tag(:genre, "3") %>
+            <%#= label_tag(:genre_3, "管理员") %>
+            <%#= text_field(:ids, '', name:'ids', id: 'ipt-ids', hidden: true) %>
+<!--          </div>-->
+        <%# end %>
+      </div>
+      <!--data-totalField="recordsTotal"-->
+      <table
+        id="tbl-assets"
+        data-classes="table table-striped table-bordered table-hover"
+        data-url="<%= more_chain_asset_admin_chain_chain_assets_path %>"
+        data-toolbar="#toolbar"
+        data-search="false"
+        data-method="get"
+        data-dataField="data"
+        data-pagination="true"
+        data-sidePagination="server"
+        data-page-size="25"
+        data-page-list="[25, 50, 100]"
+      >
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--S 模态框-添加资产-->
+<div class="modal" id="mdl-add_asset" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">添加监听资产</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for([:admin, :chain, ChainAsset.new], :html => {:id => 'frm-asset', :class => 'form-horizontal clearfix user-form-validate', :role => 'form'}) do |f| %>
+          <div class="form-group">
+            <%= f.label(:chain_type, '所属模板', :class => "control-label col-sm-4") %>
+            <div class="col-sm-8">
+              <%= f.text_field(:chain_type, :value => @chain.chain_type, :placeholder => '所属模板', :class => 'form-control', readonly: true, :required => true) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label(:asset_id, '资产 OID', :class => "control-label col-sm-4") %>
+            <i class="fa fa-spinner fa-spin hidden"></i>
+            <div class="col-sm-8">
+              <%= f.text_field(:asset_id, :placeholder => '资产 OID', :class => 'form-control', :required => true) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label(:asset_name, '资产名称', :class => "control-label col-sm-4") %>
+            <div class="col-sm-8">
+              <%= f.text_field(:asset_name, :placeholder => '资产名称', :class => 'form-control', readonly: false, :required => true) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label(:asset_alias, '资产别名', :class => "control-label col-sm-4") %>
+            <div class="col-sm-8">
+              <%= f.text_field(:asset_alias, :placeholder => '资产别名', :class => 'form-control', readonly: false, :required => false) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= f.label(:precision, '资产精度', :class => "control-label col-sm-4") %>
+            <div class="col-sm-8">
+              <%= f.text_field(:precision, :placeholder => '资产精度', :class => 'form-control', readonly: false, :required => true) %>
+            </div>
+          </div>
+          <hr class="margin-bottom-10 margin-top-10">
+          <div class="form-group">
+            <%= f.label(:out_account_id,
+                        raw('资产转出账户<i class="fa fa-question-circle" style="cursor: pointer;" title="仅显示允许转出的账户"></i>'),
+                        :class => "control-label col-sm-4") %>
+            <div class="col-sm-8">
+              <%= f.select(:out_account_id,
+                           @chain.chain_accounts.where(:out_enabled => true)
+                               .collect{|acc| ["#{acc.account_name}", acc.id]}, {:prompt => '请选择'},
+                           :placeholder => '资产转出账户', :class => 'form-control', :required => true) %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-8 col-sm-offset-4">
+              <%= f.check_box(:enabled, {:class => ''}, 'true', 'false') %>
+              <%= f.label(:enabled, '启用', :class => "control-label") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+        <button type="button" id="btn-save_new_asset" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 保存中" class="btn green">保存</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--E 模态框-添加资产-->
+
+<!--S 模态框-编辑资产-->
+<div class="modal" id="mdl-asset_update" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">编辑资产详情 <small id="asset_update_asset_name"></small></h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for([:admin, :chain, ChainAsset.new], :html => {:id => 'frm-asset_update', :class => 'form-horizontal clearfix user-form-validate', :role => 'form'}, :namespace => 'edit') do |f| %>
+          <div class="form-group">
+            <%= f.label(:asset_alias, '资产别名', :class => "control-label col-sm-3") %>
+            <div class="col-sm-9">
+              <%= f.text_field(:asset_alias, :placeholder => '资产别名', :class => 'form-control', :required => false) %>
+            </div>
+          </div><div class="form-group">
+            <%= f.label(:out_account_id,
+                        raw('资产转出账户<i class="fa fa-question-circle" style="cursor: pointer;" title="仅显示允许转出的账户"></i>'),
+                        :class => "control-label col-sm-3") %>
+            <div class="col-sm-9">
+              <%= f.select(:out_account_id,
+                           @chain.chain_accounts.where(:out_enabled => true)
+                               .collect{|acc| ["#{acc.account_name}", acc.id]}, {:prompt => '请选择'},
+                           :placeholder => '资产转出账户', :class => 'form-control', :required => true) %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+        <button type="button" id="btn-save_update_asset" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 保存中" class="btn green">保存</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--E 模态框-编辑资产-->
+
+<!--S 模态框-管理转入账户-->
+<div class="modal" id="mdl-monitor_accounts" role="dialog" style="z-index: 2;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">监听账户列表-资产转入</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <%= form_tag '#', :id => 'frm-add_account', :class => 'form-inline' do %>
+              <div class="form-group no-padding">
+                <%= select_tag :select_account, nil, :class => 'form-control' %>
+              </div>
+              <button type="button" id="btn-add_account" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 保存中" class="btn btn-sm green">添加</button>
+              <p></p>
+            <% end %>
+          </div>
+
+          <div class="row">
+            <p class="h5">已监听账户列表</p>
+            <div id="monitor-account-list" class="monitor-account-list">
+              <!--              <div class="col-sm-6 col-md-3">-->
+              <!--                <span class="monitor-account">-->
+              <!--                  <span class="account-name">committee-account</span>_<span class="account-id">1.2.xxx</span>-->
+              <!--                  <span class="account-appendix"><i class="fa fa-check"></i></span>-->
+              <!--                </span>-->
+              <!--              </div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+        <button type="button" id="btn-save_new_asset" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 保存中" class="btn green">保存</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--E 模态框-管理转入账户-->

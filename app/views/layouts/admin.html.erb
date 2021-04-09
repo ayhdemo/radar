@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>辐射源多源数据挖掘</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+  <%= stylesheet_link_tag 'pages/admin/' + controller_name + '/' + action_name, :media => "all" %>
+  <%= stylesheet_link_tag 'application', :media => "all" %>
+
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= controller_name %> <%= action_name %> <%= (controller_name == 'sessions' || controller_name == 'registrations') ? 'login' : '' %>">
+<% unless (controller_name == 'sessions' || controller_name == 'registrations') %>
+    <%= render partial: 'components/admin/header/index' %>
+    <% if notice || alert %>
+        <div class="container">
+          <div class="row">
+            <% unless notice.nil? %>
+                <div class="alert alert-warning alert-dismissable" data-auto-dismiss="3000">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <span><%= notice %></span>
+                </div>
+            <% end %>
+
+            <% unless alert.nil? %>
+                <div class="alert alert-danger alert-dismissable" data-auto-dismiss="3000">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <span><%= alert %></span>
+                </div>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+<% end %>
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+  <%= yield %>
+</div>
+<!-- END CONTAINER -->
+<%=	javascript_include_tag 'application' %>
+<%= javascript_include_tag 'pages/admin/' + controller_name + '/' + action_name %>
+
+</body>
+</html>

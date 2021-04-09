@@ -1,0 +1,28 @@
+default: &default
+  adapter: mysql2
+  pool: 64
+  timeout: 5000
+  encoding: utf8mb4
+  username: root
+  password: root
+
+#
+# PRODUCTION
+#
+production:
+  <<: *default
+  database: gateway-v2
+
+#
+# Development specific
+#
+development:
+  <<: *default
+  database: gateway-dev-v2
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: gateway-test-v2

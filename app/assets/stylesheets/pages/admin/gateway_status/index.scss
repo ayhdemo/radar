@@ -1,0 +1,37 @@
+/*
+ *= require bootstrap/css/bootstrap.min
+ *= require bootstrap-table.min
+ *= require simple-line-icons/simple-line-icons.min
+ *= require components/admin/table-managed/index
+ *= require components/admin/table-ajax/index
+ *
+ *
+ *= require components/admin/common/index
+ *= require components/admin/common/layout
+ *= require components/admin/common/rounded
+ *= require components/admin/common/plugins
+ *= require components/admin/themes/light
+ *
+ *= require_self
+ */
+
+
+.status-error {
+  color: white;
+  font-weight: bold;
+  background-color: #c33737 !important;
+}
+.status-disabled {
+  color: #444;
+  background-color: #eee !important;
+}
+.status-normal {
+  //background-color: green;
+}
+
+.trx-stat-item {
+  width: 200px;
+  display: inline-block;
+  padding: 0 6px 12px;
+  font-size: 14px;
+}

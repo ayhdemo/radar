@@ -1,0 +1,40 @@
+/**
+*= require font-awesome/css/font-awesome
+*= require medium-editor/dist/css/medium-editor
+*= require medium-editor/dist/css/themes/default
+*= require medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin
+*= require toastr/toastr
+*/
+
+.com-richtext-editor {
+    font-size: 14px;
+    outline: none;
+    background-color: #ffffff;
+    width: 100%;
+    margin: 0 auto;
+    min-height: 600px;
+    padding: 6px 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+
+// reset .medium-editor-insert-plugin .medium-insert-buttons
+.medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-show {
+    font-size: 20px;
+}
+
+.medium-editor-insert-plugin .medium-insert-buttons button {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+}
+
+.medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons {
+    left: 30px;
+    top: -20px;
+}
+
+.medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons li .fa {
+    font-size: 12px;
+}

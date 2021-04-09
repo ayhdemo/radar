@@ -1,0 +1,61 @@
+.envrc
+*.rbc
+capybara-*.html
+.rspec
+/**/.DS_Store
+
+/db/schema.rb
+/log
+/tmp
+/db/*.sqlite3
+/coverage/
+/spec/tmp
+**.orig
+rerun.txt
+pickle-email-*.html
+
+
+
+# TODO Comment out these rules if you are OK with secrets being uploaded to the repo
+/config/initializers/secret_token.rb
+/config/secrets.yml
+/config/database.yml
+/config/jpush_config.yml
+/config/initializers/qiniu_sdk.rb
+/config/sunspot.yml
+/config/jpush_config.yml
+/config/*.pem
+/config/application.yml
+/config/sidekiq.yml
+
+## Environment normalisation:
+/.bundle
+/vendor/bundle
+
+# these should all be checked in to normalise the environment:
+# Gemfile.lock, .ruby-version, .ruby-gemset
+
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+.rvmrc
+
+
+
+#
+/*.sql
+/**/*.psd
+.DS_Store
+/.DS_Store
+dump.rdb
+
+#node
+/node_modules/
+/public/uploads/tmp/*
+/public/uploads/*
+
+
+.idea
+public/system
+shared/pids/puma.state
+
+Gemfile.lock
+*.csv

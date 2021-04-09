@@ -1,0 +1,2 @@
+class GatewayStatus < ApplicationRecord
+end

@@ -1,0 +1,47 @@
+# config/application.yml
+defaults: &defaults
+  qiniu:
+    bucket: 'shangyetest' #空间名
+    qiniu_ip: 'http://testimg.somecoding.com' #连接七牛使用的域名
+    access_key: '0xd5qlSaqhwxWgtZTfwiyRsZRTKrDvykCx19O0Ng'
+    secret_key: '827rGtqzHwDclNLAWxGd6kT_XFty8Xb_A6eKkFoA'
+    up_host: "http://up-z1.qiniu.com"
+  redis:
+    host: 'localhost'
+    password: '111'
+    port: 6379
+    db: 10
+  bts:
+    cli_server:     'http://dex.bts.ai:8095' # 必需不能暴露在公网，或者在实际的cli前加验证代理，
+                                             # 钱包解锁后就无需再次输入密码，因此比较危险。
+    cli_password:   '123'
+  seer:
+    cli_server:     'http://36.110.189.204:8093'  # 必需不能暴露在公网，或者在实际的cli前加验证代理，
+                                                  # 钱包解锁后就无需再次输入密码，因此比较危险。
+    cli_password:   '123'
+  erc20:
+    cli_server:
+      - 'https://ropsten.infura.io0000/3cs2VLPQw6LAu2eEB5u1'
+      - 'https://mainnet.infura.io/ITdJB6fPMhdY2wSfuDhk'
+    cli_password:   '123'
+    etherscan:
+      cli_server: 'https://api-ropsten.etherscan.io/api'
+    priv:
+       '0x51b2f20308aa322609a82c403aa2484394715999': 'eaf129cb82e069a4f0a82028039705035ec42723641ab98ccc718bd0be3b8710'     # seer测试网 erc20网关账户私钥
+
+  pfc:
+    enc_base64: 'xxxx'
+    cli_server: 'http://127.0.0.1:3000'
+    ip:
+      allow: !ruby/regexp /.*/ #/^127.0.0.1|127.0.0.2$/
+
+  alert:
+    server: 'http://36.110.189.51:5000/alert'
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
