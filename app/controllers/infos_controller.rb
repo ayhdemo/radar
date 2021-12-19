@@ -66,6 +66,10 @@ class InfosController < ApplicationController
 		end
 	end
 
+	def charts
+		
+	end
+
 	private
 	def sigs_get_data(sigs)
 		data = []

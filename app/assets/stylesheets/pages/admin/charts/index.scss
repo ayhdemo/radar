@@ -1,0 +1,92 @@
+/*
+ *= require bootstrap/css/bootstrap.min
+ *= require bootstrap-table.min
+ *= require simple-line-icons/simple-line-icons.min
+ *= require components/admin/table-managed/index
+ *= require components/admin/table-ajax/index
+ *
+ *
+ *= require components/admin/common/index
+ *= require components/admin/common/layout
+ *= require components/admin/common/rounded
+ *= require components/admin/common/plugins
+ *= require components/admin/themes/light
+ *
+ *= require_self
+ */
+
+.table-container {
+    .dataTables_filter {
+        .radio {
+            display: inline-block;
+            float: none;
+            padding-left: 8px;
+            margin: 0 10px 5px 0;
+        }
+        input[type="radio"] {
+            position: relative;
+            margin-left: 0;
+            left: -6px;
+            width: auto;
+        }
+    }
+}
+
+.fixed-table-toolbar {
+  .search {
+    @media(min-width: 768px) {
+      input {
+        width: 28em;
+        float: right;
+        transition: 0.2s;
+      }
+    }
+  }
+}
+
+table tbody {
+  tr.detail-view {
+    td {
+      padding: 0 !important;
+    }
+  }
+
+  td:first-child {
+    vertical-align: middle !important;
+  }
+  td > .his-detail {
+    border: 1px solid #ccc;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    &:not(:first-child) {
+      border-top: 0;
+      border-right: 0;
+    }
+    &:last-child {
+      border-right: 1px solid #ccc;
+    }
+  }
+}
+
+
+#toolbar {
+  .dropdown {
+    width: 140px;
+    display: inline-block;
+  }
+
+  form {
+    display: inline-block;
+
+    label {
+      margin-right: 4px;
+    }
+  }
+}
+
+#sel-in_out,
+#sel-search_option {
+  display: inline-block;
+  width: 8em;
+}

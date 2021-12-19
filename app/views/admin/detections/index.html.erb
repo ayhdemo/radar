@@ -1,0 +1,131 @@
+<%#= content_tag 'p', nil, :id => 'gw-accounts', :'data-gw-accounts' => @gw_accounts %>
+<!-- BEGIN PAGE HEAD -->
+<div class="page-head">
+  <div class="container">
+
+  </div>
+</div>
+<!-- END PAGE HEAD -->
+<!-- BEGIN PAGE CONTENT -->
+<div class="page-content">
+  <div id="his-container" class="container">
+    <!-- BEGIN PAGE CONTENT INNER -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-gift font-green-sharp"></i>
+              <% if @title %>
+              <span class="caption-subject font-green-sharp bold"><%= "#{@title}:【组网方式: #{@subtitle}】"%></span>
+              <% else %>
+              <span class="caption-subject font-green-sharp bold">辐射源记录</span>
+              <% end %>
+            </div>
+            <div class="actions">
+              <button id="btn-expand" class="btn btn-default btn-sm">
+                <i class="fa fa-expand" title="全屏"></i>
+              </button>
+              <button id="btn-compress" class="btn btn-default btn-sm" style="display: none;">
+                <i class="fa fa-compress" title="取消全屏"></i>
+              </button>
+            </div>
+          </div>
+          <div class="portlet-body">
+            <div class="table-container">
+              <div id="toolbar">
+                <textarea id="ipt-clipboard" hidden></textarea>
+                <div class="dropdown">
+                  <button class="form-control btn-sm dropdown-toggle" type="button" id="drp-export" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    导出选中记录 <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="rp-export">
+                    <li><a href="#" id="btn-export_file">导出到文件</a></li>
+                    <li><a href="#" id="btn-export_clipboard" data-clipboard-target="#ipt-clipboard">导出剪贴板</a></li>
+                  </ul>
+                </div>
+                <form action="#" class="form-inline">
+                  <div class="form-group">
+                    <label for="#">仅显示: </label>
+                    <label for="chk-trx_failed"><input id="chk-trx_failed" type="checkbox" name="failed"> 已处理</label>
+                    <label for="chk-trx_unhandled"><input id="chk-trx_unhandled" type="checkbox" name="unhandled"> 未处理</label>
+                  </div>
+                </form>
+              </div>
+              <table
+                id="tbl-gw_his"
+                data-classes="table table-striped table-bordered table-hover"
+                data-url="<%= more_detections_admin_detections_path %>"
+                data-toolbar="#toolbar"
+                data-id-field='row_id'
+                data-search="true"
+                data-pagination="true"
+                data-page-size="25"
+                data-page-list="[25, 50, 100]"
+                data-detail-view="true"
+              >
+
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- End: life time stats -->
+      </div>
+    </div>
+    <!-- END PAGE CONTENT INNER -->
+  </div>
+</div>
+<!-- END PAGE CONTENT -->
+
+
+<!--S 模态框-添加标注-->
+<div class="modal" id="mdl-his_comment" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">专家评估
+          <small class="text-info">
+            <span class="fa fa-info-circle"></span>
+            依托专家对相关指标进行选择，保存后会更新至知识图谱
+          </small>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for([:admin, Sig.new], :html => {:id => 'frm-history', :class => 'form-horizontal clearfix user-form-validate', :role => 'form'}) do |f| %>
+          <div class="form-group">
+            <%= f.label(:id, '记录编号', :class => "control-label") %>
+            <%= f.text_field(:id, :placeholder => 'id', :class => 'form-control', readonly: true, :required => true) %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label(:radarSys, '技术体制', :class => "control-label") %>
+            <%= f.text_field(:radarSys, :placeholder => '技术体制', :class => 'form-control', :required => true) %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label(:radarUseage, '雷达用途', :class => "control-label") %>
+            <%= f.text_field(:radarUseage, :placeholder => '雷达用途', :class => 'form-control', :required => true) %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label(:radarWorkMode, '工作模式', :class => "control-label") %>
+            <%= f.text_field(:radarWorkMode, :placeholder => '工作模式', :class => 'form-control', :required => true) %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label(:targetType, '目标类型', :class => "control-label") %>
+            <%= f.text_field(:targetType, :placeholder => '目标类型', :class => 'form-control', :required => true) %>
+          </div>
+
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">取消</button>
+        <button type="button" id="btn-save_his_comment" data-loading-text="<i class='fa fa-spinner fa-spin '></i> 保存中" class="btn green">保存</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--E 模态框-添加资产-->

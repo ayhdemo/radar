@@ -1,0 +1,106 @@
+.atw_imgwrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.atw_imgwrapper .atw_imgcontent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.atw_imgwrapper .atw_imgshow {
+    position: absolute;
+    float: left;
+}
+.atw_imgwrapper .atw_imgshow_left {
+    position: absolute;
+    width: 78px;
+    height: 100px;
+    z-index: 1000;
+    left: 0;
+    top: 50%;
+    margin-top: -50px;
+    text-indent: -9999px;
+    display: none;
+    cursor: pointer;
+    background: url(images/left-arrow.png);
+    filter:alpha(opacity=50);
+    -moz-opacity: 0.5;
+    -Khtml-opacity: 0.5;
+    opacity: 0.5;
+}
+.atw_imgwrapper .atw_imgshow_right {
+    position: absolute;
+    width: 78px;
+    height: 100px;
+    right: 0;
+    top: 50%;
+    margin-top: -50px;
+    text-indent: -9999px;
+    z-index: 1000;
+    display: none;
+    cursor: pointer;
+    background: url(images/right-arrow.png);
+    filter:alpha(opacity=50);
+    -moz-opacity: 0.5;
+    -Khtml-opacity: 0.5;
+    opacity: 0.5;
+}
+.atw_imgwrapper .atw_imgshow_timer {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: .6;
+    cursor: pointer;
+    z-index: 1001;
+}
+.atw_imgwrapper .atw_imgshow_mask {
+    display: block;
+    width: 20px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 2;
+    overflow: hidden;
+}
+.atw_imgwrapper .atw_imgshow_mask.move {
+    width: 40px;
+    left: 0px;
+    background: url(images/timer-black.png) repeat 0 0;
+}
+.atw_imgwrapper .atw_imgshow_rotator {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    left: -20px;
+    background: url(images/rotator-black.png) no-repeat;
+    z-index: 3;
+}
+.atw_imgwrapper .atw_imgshow_rotator.move {
+    left: 0px;
+}
+.atw_imgwrapper .atw_imgshow_pause {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: url(images/pause-black.png) no-repeat;
+    z-index: 4;
+    opacity: 0;
+}
+.atw_imgwrapper .atw_imgshow_pause.active {
+    background: url(images/pause-black.png) no-repeat 0 -40px;
+}
+.atw_imgwrapper .atw_imgshow_timer:hover .atw_imgshow_pause, .atw_imgshow_pause.active{
+    opacity: 1;
+}

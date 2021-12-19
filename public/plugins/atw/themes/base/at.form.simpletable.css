@@ -1,0 +1,36 @@
+.atw_grid{overflow: hidden; position: relative; cursor: default; font-family: Tahoma, Arial, Helvetica; font-size: 11px; border: 1px solid #888;}
+.atw_grid *{box-sizing: border-box; -ms-box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;}
+.atw_grid_client{position: absolute; left: 0px; bottom: 0px; right: 0px; top: 0px;}
+.atw_grid_box{position: relative;overflow: hidden;width: 100%;height: 100%;}
+.atw_grid_scroll{position: absolute;overflow: hidden;width: 100%;height: 100%;}
+.atw_grid_scroll_content{overflow: hidden;}
+.atw_grid_view_top{height: 25px; overflow: hidden; bottom: auto; width: 100%; border-bottom: 1px solid threedlightshadow;}
+.atw_grid_view_middle{overflow: hidden; top: 25px;}
+.atw_grid_view_bottom{overflow: hidden; top: auto; height: 20px; display: none;}
+.atw_grid_headers{position: relative; overflow: hidden; width: 32000px; height: 100%;
+background: #DDD;
+background: -webkit-linear-gradient(top, whiteSmoke 0%,#DDD 100%);
+background: -o-linear-gradient(top, whiteSmoke 0%,#DDD 100%);
+background: -ms-linear-gradient(top, whiteSmoke 0%,#DDD 100%);
+background: linear-gradient(top, whiteSmoke 0%,#DDD 100%);}
+.atw_column,.atw_column_checkbox{float: left; overflow: hidden; height: 100%; border-right: 1px solid #ccc; padding: 0px 4px;
+text-shadow: 1px 1px 1px #ccc; -webkit-user-select: none; position: relative;}
+.atw_column_text{height: 100%; vertical-align:middle; white-space: nowrap; line-height: 25px;}
+.atw_column_text.align_center{text-align: center;}
+.atw_column_separator{float: left; position: relative; top: 12.5%; left: -10px; width: 20px; height: 75%; margin: 0px -20px 0px 0px; vertical-align: top; z-index: 1000; cursor: e-resize;}
+.atw_column_sort{width: 10px; float:right; height: 100%; position: absolute; top: 0px; right: 4px; cursor: pointer;}
+.atw_column_sort.desc{background:url(images/sort_desc.gif) no-repeat right 5px;}
+.atw_column_sort.asc{background:url(images/sort_asc.gif) no-repeat right 5px;}
+.atw_column_select{left: 4px; right: 15px; float:left; height: 100%; position: absolute; top: 0px; cursor: url(images/column_select.png),default;}
+
+.atw_grid_rows{position: relative;overflow: hidden;width: 32000px;height: 32000px;}
+.atw_grid_row{border-bottom: 1px solid threedlightshadow; height: 20px; line-height: 20px;}
+.atw_grid_row.even{background-color: #EDF0F5;}
+.atw_grid_row.odd{background-color: #D9E8FD;}
+.atw_grid_row.active{background-color: #F5DAC0;}
+.atw_grid_cell,.atw_grid_cell_checkbox{border-right: 1px solid threedlightshadow; overflow: hidden; float: left; white-space: nowrap; height: 100%; padding: 0px 4px; text-overflow: ellipsis; display:block;
+-moz-user-select: none; -webkit-user-select: none; user-select: none;}
+.atw_grid_cell.selected{background-color: #F5DAC0;}
+.atw_grid_row_selected{background-color:#F3E4A8;}
+
+.atw_grid_scroll_box{overflow: auto;}

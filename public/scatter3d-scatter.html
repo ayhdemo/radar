@@ -1,0 +1,154 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=scatter3d-scatter&gl=1
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+        <link rel="stylesheet"   href="plugins/bootstrap/css/bootstrap.min.css" >
+        <script type="text/javascript" src="result.js"></script>
+
+		<script src="plugins/jquery/jquery-1.11.3.min.js"></script>
+
+        <script src="plugins/echarts/dist/echarts.min.js"></script>
+        <script src="plugins/echarts/dist/extension/dataTool.min.js"></script>
+        <script src="plugins/echarts/dist/echarts-gl.min.js"></script>
+        <script src="plugins/echarts/map/js/china.js"></script>
+        <script src="plugins/echarts/map/js/world.js"></script>
+
+        <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/china.js"></script>
+		
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+     
+        
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>-->
+       
+
+        <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+
+var option;
+
+
+
+//$.get('./result.json', function (data) {
+
+$(document).ready(function () {
+
+    var count = CON_CONFIG.rfAverage.length;
+    var data = new  Array(count + 1);
+    data[0] = ["rfAverage", "priAverage", "pwAverage", "radarName", "addr", "lon", "lat"];
+    for(var i=0; i<count; i++){
+        var array = new Array();
+        array[0] = CON_CONFIG.rfAverage[i];
+        array[1] = CON_CONFIG.priAverage[i];
+        array[2] = CON_CONFIG.pwAverage[i];
+        array[3] = CON_CONFIG.radarName[i];
+        array[4] = CON_CONFIG.addr[i];
+        array[5] = CON_CONFIG.lon[i];
+        array[6] = CON_CONFIG.lat[i];
+        data[i + 1] = array;
+    }
+
+    var sizeValue = '57%';
+    var symbolSize = 2.5;
+
+
+    option = {
+        // title配置 https://blog.csdn.net/zhang__ao/article/details/80745873
+        title : {
+            show:true, //显示策略，默认值true,可选为：true（显示） | false（隐藏）
+            text: '雷达型号：', //主标题文本，'\n'指定换行
+            x:'center', //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
+            y: '150'	//垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
+        },
+        tooltip: {
+			
+		},
+        grid3D: {
+            // width: '50%'
+        },
+        xAxis3D: {
+            name:'rfAverage'
+        },
+        yAxis3D: {
+            name:'priAverage'
+        },
+        zAxis3D: {
+            name:'pwAverage'
+        },
+        grid: [
+            {left: '50%', width: '20%', bottom: sizeValue},
+            {left: '75%', width: '20%', bottom: sizeValue},
+            {left: '50%', width: '20%',  top: sizeValue},
+            {left: '75%', width: '20%', top: sizeValue}
+        ],
+        dataset: {
+            dimensions: [
+                'pwAverage',
+                'priAverage',
+                'rfAverage',
+                'radarName',
+                'addr',
+                'lon',
+                'lat'
+//                {name: 'Year', type: 'ordinal'}
+            ],
+            source: data
+        },
+        series: [
+            {
+                name: '',
+                type: 'scatter3D',
+                symbolSize: 3,
+                encode: {
+                    x: 'rfAverage',
+                    y: 'priAverage',
+                    z: 'pwAverage',
+                    tooltip: [0, 1, 2, 3, 4, 5, 6]
+                }
+            }
+        ]
+    };
+	
+	console.log("1:"+option)
+
+    myChart.setOption(option);
+
+	myChart.on("mouseover",function(params,any){
+	console.log(params)
+	var radarName="";
+	var dimensionNames = params.dimensionNames;
+	var data = params.data;
+		for(var i=0;i<data.length;i++){
+					if("radarName" == dimensionNames[i]){
+						radarName = data[i]+"\n";
+					}
+				}
+		option.title.text='雷达型号：'+radarName
+		myChart.setOption(option,true)
+	})
+});
+
+console.log("2:"+option)
+if (option && typeof option === 'object') {
+	console.log("3:"+option)
+    myChart.setOption(option);
+}
+
+        </script>
+    </body>
+</html>
+    

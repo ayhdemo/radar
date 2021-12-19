@@ -91,7 +91,17 @@
               <%= link_to '系统实时日志', admin_syslogs_show_path %>
             </li>
           <% end %>
+         <% if can?(:index, History) %>
+            <li class="<%= controller_name == 'detections' ? 'active' : '' %>">
+              <%= link_to '误差检测', admin_detections_path %>
+            </li>
+          <% end %>
 
+         <% if can?(:index, History) %>
+            <li class="<%= controller_name == 'chart' ? 'active' : '' %>">
+              <%= link_to '辐射源特征可视化', admin_charts_path %>
+            </li>
+          <% end %>
         
         </ul>
       </div>
