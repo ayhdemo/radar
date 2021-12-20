@@ -1,6 +1,6 @@
 source 'https://gems.ruby-china.com'
 
-ruby '2.5.3'
+ruby '2.6.8'
 
 gem 'rails', '5.2.3'
 gem 'puma', '~> 3.11'
@@ -29,7 +29,7 @@ gem 'colorize'
 gem 'sass-rails', '5.0.7'
 gem 'coffee-rails', '4.2.2'
 gem 'uglifier', '4.1.20'
-gem 'therubyracer', '0.12.3'
+# gem 'therubyracer', '0.12.3'
 
 # gem 'rufus-scheduler', '3.6.0'
 gem 'ruby-enum'
@@ -57,8 +57,8 @@ gem 'tzinfo-data'
 # gem 'btcruby', '~> 1.8' # Bitcoin toolkit for Ruby
 
 gem 'activegraph', '~> 10.0.0' # For example, see https://rubygems.org/gems/activegraph/versions for the latest versions
-gem 'neo4j-ruby-driver', '~> 1.7.0'
+# gem 'neo4j-ruby-driver', '~> 1.7.0'
 
 gem "pr_geohash"
-
+gem "ransack"
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?

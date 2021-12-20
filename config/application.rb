@@ -2,7 +2,7 @@ require_relative 'boot'
 
 require 'rails/all'
 
-require 'active_graph/railtie'
+# require 'active_graph/railtie'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line

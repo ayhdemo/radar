@@ -1,1 +1,1 @@
-$app_alert = Alert.new
+# $app_alert = Alert.new

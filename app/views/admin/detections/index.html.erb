@@ -1,3 +1,8 @@
+<style>
+  .pull-right{
+    margin-top: 30px !important;
+  }
+</style>
 <%#= content_tag 'p', nil, :id => 'gw-accounts', :'data-gw-accounts' => @gw_accounts %>
 <!-- BEGIN PAGE HEAD -->
 <div class="page-head">
@@ -52,21 +57,49 @@
                     <label for="chk-trx_unhandled"><input id="chk-trx_unhandled" type="checkbox" name="unhandled"> 未处理</label>
                   </div>
                 </form>
-              </div>
-              <table
-                id="tbl-gw_his"
-                data-classes="table table-striped table-bordered table-hover"
-                data-url="<%= more_detections_admin_detections_path %>"
-                data-toolbar="#toolbar"
-                data-id-field='row_id'
-                data-search="true"
-                data-pagination="true"
-                data-page-size="25"
-                data-page-list="[25, 50, 100]"
-                data-detail-view="true"
-              >
+                <form>
+                  <label for="start1" style="margin-left: 190px;">时间段1</label>
+                  <label for="start2" style="margin-left:420px;">时间段2</label>
+                  <br>
+                  <input id="start1" type="datetime-local" name="start1" value=<%= params[:start1] %>>
+                  <input id="end1" type="datetime-local" name="end1" value=<%= params[:end1] %>>
+                  <button class="btn btn-primary">对比</button>
 
-              </table>
+                  <input id="start2" type="datetime-local" name="start2" value=<%= params[:start2] %>>
+                  <input id="end2" type="datetime-local" name="end2" value=<%= params[:end2] %>>
+                </form>
+              </div>
+              <div class="col-md-6">
+                <table
+                  id="tbl-gw_his"
+                  data-classes="table table-striped table-bordered table-hover"
+                  data-url="<%= more_detections_admin_detections_path(start1: params[:start1], end1: params[:end1], start2: params[:start2], end2: params[:end2]) %>"
+                  data-toolbar="#toolbar1"
+                  data-id-field='row_id1'
+                  data-search="true"
+                  data-pagination="true"
+                  data-page-size="25"
+                  data-page-list="[25, 50, 100]"
+                  data-detail-view="true"
+                >
+
+                </table>
+              </div>
+              <div class="col-md-6">
+                <table
+                  id="tbl-gw_his1"
+                  data-classes="table table-striped table-bordered table-hover"
+                  data-url="<%= more_detections_another_admin_detections_path(start1: params[:start1], end1: params[:end1], start2: params[:start2], end2: params[:end2]) %>"
+                  data-toolbar="#toolbar2"
+                  data-id-field='row_id2'
+                  data-search="true"
+                  data-pagination="true"
+                  data-page-size="25"
+                  data-page-list="[25, 50, 100]"
+                  data-detail-view="true"
+                >
+                </table>
+              </div>
             </div>
           </div>
         </div>

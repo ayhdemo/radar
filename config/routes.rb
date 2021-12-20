@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     resources :detections, only: [:index] do
       collection do
         get :more_detections
+        get :more_detections_another
       end
       post :update_comment
     end

@@ -478,7 +478,7 @@ $(function () {
             //     title: '组网分析方式',
             //     valign: 'middle',
             //     formatter: (value, row) => {
-            //         if(value != null && row.network_id){ 
+            //         if(value != null && row.network_id){
             //             console.log(row)
             //             return  [
             //                 value,
@@ -529,6 +529,273 @@ $(function () {
             // }
         ]
     });
+
+
+
+
+
+
+
+
+
+
+    var $tbl_his1 = el.find('#tbl-gw_his1');
+    $tbl_his1.bootstrapTable({
+        clickToSelect: true,
+        pagination: true,
+        paginationLoop: true,
+        pageSize: 25,
+        pageList: [10, 25, 50, 100],
+        sidePagination: 'server',
+        showRefresh: true,
+        uniqueId: 'id',
+        queryParams: function(params) {
+            let sel_in_out      = $("#sel-in_out").val(),
+                sel_search_opt  = $("#sel-search_option").val();
+
+            if(params.search) {
+                if (sel_in_out && sel_in_out.length)
+                    params.in_out = sel_in_out;
+
+                if (sel_search_opt && sel_search_opt.length)
+                    params.search_opt = sel_search_opt;
+            }
+
+            let opt_failed      = $chk_failed.is(':checked'),
+                opt_unhandled   = $chk_unhandled.is(':checked');
+            if(!(opt_failed || opt_unhandled))
+                return params;
+            if(opt_unhandled) {
+                params.only_unhandled = true;
+                return params;
+            }
+            if (opt_failed) {
+                params.only_failed = true;
+                return params;
+            }
+        },
+        detailFormatter: function (index, row) {
+            function generateItem(key, val, width) {
+                if(!width) {
+                    width = {xs: 12,md: 2}
+                }
+                return `<div class="his-detail col-xs-${width.xs} col-md-${width.md}"> <span class="key">${key}: </span><span class="value">${val || '无'}</span></div>`
+            }
+            return [
+                {
+                    title: '目标名',
+                    field: "radarName",
+                     width: {
+                        xs: 12,
+                        md: 12
+                    },
+                },
+                {
+                    field: 'searchLast',
+                    title: '侦查结束时间',
+                    formatter: function (idx, row) {
+                        return " " + row.searchLast
+                    },
+                    width: {
+                        xs: 12,
+                        md: 12
+                    },
+                },
+                {
+                    title: '载频',
+                    field: "rfAverage",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: '载频最大值',
+                    field: "rfMax",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: '载频最小值',
+                    field: "rfMin",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: '载频类型',
+                    field: "rfType",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: 'PRI',
+                    field: "priAverage",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: 'PRI最大值',
+                    field: "priMax",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: 'PRI最小值',
+                    field: "priMin",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: 'PRI类型',
+                    field: "priType",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: '脉宽',
+                    field: "pwAverage",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: '脉宽最大值',
+                    field: "pwMax",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: '脉宽最小值',
+                    field: "pwMin",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: '脉宽类型',
+                    field: "pwType",
+                     width: {
+                        xs: 3,
+                        md: 3
+                    },
+                },
+                {
+                    title: '带宽BW',
+                    field: "bw",
+                     width: {
+                        xs: 12,
+                        md: 12
+                    },
+                },
+                {
+                    title: '泛网络信息',
+                    field: "netInfo",
+                     width: {
+                        xs: 12,
+                        md: 12
+                    },
+                },
+            ].map(function (item) {
+                var val = row[item.field];
+                if (typeof(item.formatter) === 'function')
+                    val = item.formatter(index, row);
+                return generateItem(item.title, val, item.width)
+            }).join('')
+        },
+        columns: [
+            {
+                checkbox: true
+            },
+            {
+                title: '编号',
+                field: 'id',
+                valign: 'middle'
+            },
+            {
+                title: 'sn',
+                field: "sn",
+                valign: 'middle'
+            },
+            {
+                title: '侦查时间',
+                field: "searchFirst",
+                valign: 'middle'
+            },
+            {
+                field: 'ownNation',
+                title: '国名',
+                valign: 'middle'
+            },
+            {
+                field: 'addr',
+                title: '地名',
+                valign: 'middle'
+            },
+            {
+                field: 'radarName',
+                title: '型号',
+                valign: 'middle'
+            },
+            {
+                field: 'lon',
+                title: '经度',
+                valign: 'middle'
+            },
+            {
+                field: 'lat',
+                title: '纬度',
+                valign: 'middle'
+            },
+            {
+                field: 'radarSys',
+                title: '技术体制',
+                valign: 'middle'
+            },
+            {
+                field: 'radarUseage',
+                title: '雷达用途',
+                valign: 'middle'
+            },
+            {
+                field: 'radarWorkMode',
+                title: '工作模式',
+                valign: 'middle'
+            },
+           {
+                field: 'event',
+                title: '事件状态',
+                valign: 'middle'
+            }
+        ]
+    });
+
+
+
+
+
+
+
+
+
+
     $tbl_his.on('dbl-click-row.bs.table', function (e, row, $ele, field) {
         var index = $ele.data('index');
         var is_in_detail_view = $ele.next().hasClass('detail-view');

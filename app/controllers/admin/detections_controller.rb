@@ -27,31 +27,49 @@ module Admin
 	    end
 
 	    def more_detections
-
 	    	refer_params = Rack::Utils.parse_query URI(request.referer).query
-	    	puts 11111
-	    	p refer_params
 
 	    	if refer_params["network_id"]
-	    		detections_where = Detection.where(network_id: refer_params["network_id"]) 
+	    		detections_where = Detection.where(network_id: refer_params["network_id"])
 	    	else
 	    		detections_where = Detection.all
 	    	end
-	      detections_res = detections_where.reverse_order
+				@q = detections_where.ransack(sim_sig_searchFirst_gteq: params[:start1], sim_sig_searchFirst_lteq: params[:end1]).result
+	      detections_res = @q.reverse_order
 	                    .paginate({page: @page, per_page: @per_page})
-	                    .collect{|de_item| 
-	                    	item = de_item.sig
+	                    .collect{|de_item|
+	                    	item = de_item.sim_sig
 	                    	tmp = item.as_json
 	                    	tmp[:searchFirst] = item[:searchFirst].strftime("%Y-%m-%d %H:%M:%S")
 	                    	tmp[:searchLast] = item[:searchLast].strftime("%Y-%m-%d %H:%M:%S")
 	                    	tmp[:netInfo] = Netinfo.find_by_name(item[:radarName])&.content
-	                    	# tmp[:level] = "99"
-
 	                    	tmp[:event] = "与SIG: #{de_item.sim_sig_id} 冲突"
 	                    	tmp}
-	                    # .order("in_block_time #{@order}")
+	      render :json => {total: @q.count, rows: detections_res}
+	    end
 
-	      render :json => {total: detections_where.count, rows: detections_res}
+			def more_detections_another
+	    	refer_params = Rack::Utils.parse_query URI(request.referer).query
+
+	    	if refer_params["network_id"]
+	    		detections_where = Detection.where(network_id: refer_params["network_id"])
+	    	else
+	    		detections_where = Detection.all
+	    	end
+				@q = detections_where.ransack(sim_sig_searchFirst_gteq: params[:start2], sim_sig_searchFirst_lteq: params[:end2]).result
+
+				detections_res = @q.reverse_order
+											.paginate({page: @page, per_page: @per_page})
+											.collect{|de_item|
+												item = de_item.sim_sig
+												tmp = item.as_json
+												tmp[:searchFirst] = item[:searchFirst].strftime("%Y-%m-%d %H:%M:%S")
+												tmp[:searchLast] = item[:searchLast].strftime("%Y-%m-%d %H:%M:%S")
+												tmp[:netInfo] = Netinfo.find_by_name(item[:radarName])&.content
+												tmp[:event] = "与SIG: #{de_item.sim_sig_id} 冲突"
+												tmp}
+
+	      render :json => {total: @q.count, rows: detections_res}
 	    end
 
 	    private
@@ -83,9 +101,9 @@ module Admin
 	      now               = 10.minutes.ago.utc.strftime('%Y-%m-%dT%H:%M:%S')
 	      extra_conditions  = ''
 	      if only_unhandled
-	        extra_conditions += "process_status<> '#{TrxStatus::AUTO_OUT_CONFIRMED}' and in_block_time< '#{now}' and comment = ''"
+	        extra_conditions += "process_status<> 'start' and in_block_time< '#{now}' and comment = ''"
 	      elsif only_failed
-	        extra_conditions += "process_status<> '#{TrxStatus::AUTO_OUT_CONFIRMED}' and in_block_time< '#{now}'"
+	        extra_conditions += "process_status<> 'end' and in_block_time< '#{now}'"
 	      end
 
 	      return @search_condition = extra_conditions if @search_condition.empty?
